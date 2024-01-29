@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
@@ -45,18 +46,25 @@ fun LandingScreen(navController: NavController){
                         .fillMaxWidth()
                         .height(200.dp))
                 Spacer(modifier = Modifier.fillMaxWidth().height(20.dp))
-                Text("Let's meet our summer\n coffee drinks", modifier = Modifier.fillMaxWidth(), style = TextStyle(
+                Text(text = "Let's meet our summer\n coffee drinks",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(), style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = TextUnit(24f, type = TextUnitType.Sp)
                 ),)
                 Spacer(modifier = Modifier.fillMaxWidth().height(20.dp))
-                Text("Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor")
+                Text("Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor Lorem Ipsum dolor",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(), style = TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = TextUnit(16f, type = TextUnitType.Sp)
+                    ))
                 Spacer(modifier = Modifier.fillMaxWidth().height(20.dp))
                 Button(onClick = { navController.navigate(ScreenRoute.Home.route) },
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(20.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primary)) {
+                        ) {
                     Text("GET STARTED", )
                 }
             }

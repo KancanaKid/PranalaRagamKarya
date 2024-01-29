@@ -10,19 +10,19 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val result = mutableStateOf(arrayListOf<Int>())
 
     fun generatePrime(end:Int){
-        for (i in 1..end){
-            if(isPrime(i)){
+
+        for(i in 2 until end){
+            var counter = 0
+            for(x in 1..i){
+                if(i%x==0){
+                    counter++
+                }
+            }
+            if(counter==2) {
                 result.value.add(i)
             }
         }
+
     }
 
-    fun isPrime(value:Int):Boolean{
-        for(i in 2..value){
-            if(value % i == 0) {
-                return false
-            }
-        }
-        return true
-    }
 }

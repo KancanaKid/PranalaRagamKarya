@@ -40,6 +40,7 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
     val textState = remember {
         mutableStateOf(TextFieldValue())
     }
+    val result = viewModel.result.value
     Scaffold (
         content = {  paddingValues ->  
             Column(modifier = Modifier
@@ -55,7 +56,10 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
                     .height(10.dp))
-                TextField(value = textState.value, onValueChange = { textState.value = it}, modifier = Modifier.fillMaxWidth())
+                TextField(value = textState.value, onValueChange = {
+                    textState.value = it
+                    viewModel.result.value.clear()
+                                                                   }, modifier = Modifier.fillMaxWidth())
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
                     .height(16.dp))
@@ -64,11 +68,12 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
                 },
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.primary)) {
+                        .fillMaxWidth()) {
                     Text("GENERATE BILANGAN PRIMA")
                 }
-
+                Text(text = "${result}", fontWeight = FontWeight.Normal,
+                    fontSize = TextUnit(12f, type = TextUnitType.Sp)
+                )
             }
         }    
     )

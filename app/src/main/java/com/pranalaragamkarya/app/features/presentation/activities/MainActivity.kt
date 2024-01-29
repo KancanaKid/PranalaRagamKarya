@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "onboarding"){
-                        navigation(startDestination = ScreenRoute.Landing.route, "landing"){
+                        navigation(startDestination = ScreenRoute.Landing.route, "onboarding"){
                             composable(ScreenRoute.Landing.route){entry ->
                                 // go to landing
                                 LandingScreen(navController = navController)
