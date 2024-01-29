@@ -17,9 +17,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,7 +45,9 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
     val textState = remember {
         mutableStateOf(TextFieldValue())
     }
-    val result = viewModel.result.value
+
+    var currentInput = 0
+    val result = viewModel.result.collectAsState()
     Scaffold (
         content = {  paddingValues ->  
             Column(modifier = Modifier
@@ -58,22 +65,26 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
                     .height(10.dp))
                 TextField(value = textState.value, onValueChange = {
                     textState.value = it
-                    viewModel.result.value.clear()
+                    //viewModel.result.value.clear()
                                                                    }, modifier = Modifier.fillMaxWidth())
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
                     .height(16.dp))
                 Button(onClick = {
-                    viewModel.generatePrime(textState.value.text.toInt())
+                    currentInput = textState.value.text.toInt()
+                    viewModel.generatePrime(currentInput)
                 },
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .fillMaxWidth()) {
                     Text("GENERATE BILANGAN PRIMA")
                 }
-                Text(text = "${result}", fontWeight = FontWeight.Normal,
-                    fontSize = TextUnit(12f, type = TextUnitType.Sp)
-                )
+                result.value.forEach {
+                    Text(text = "${it}", fontWeight = FontWeight.Normal,
+                        fontSize = TextUnit(12f, type = TextUnitType.Sp)
+                    )
+                }
+
             }
         }    
     )
