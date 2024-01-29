@@ -43,11 +43,12 @@ import com.pranalaragamkarya.app.ui.theme.PranalaRagamKaryaTheme
 @Composable
 fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltViewModel()){
     val textState = remember {
-        mutableStateOf(TextFieldValue())
+        mutableStateOf("")
     }
 
     var currentInput = 0
-    val result = viewModel.result.collectAsState()
+    val result by viewModel.result.collectAsState()
+
     Scaffold (
         content = {  paddingValues ->  
             Column(modifier = Modifier
@@ -65,13 +66,12 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
                     .height(10.dp))
                 TextField(value = textState.value, onValueChange = {
                     textState.value = it
-                    //viewModel.result.value.clear()
                                                                    }, modifier = Modifier.fillMaxWidth())
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
                     .height(16.dp))
                 Button(onClick = {
-                    currentInput = textState.value.text.toInt()
+                    currentInput = textState.value.toInt()
                     viewModel.generatePrime(currentInput)
                 },
                     shape = RoundedCornerShape(10.dp),
@@ -79,15 +79,20 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
                         .fillMaxWidth()) {
                     Text("GENERATE BILANGAN PRIMA")
                 }
-                result.value.forEach {
-                    Text(text = "${it}", fontWeight = FontWeight.Normal,
-                        fontSize = TextUnit(12f, type = TextUnitType.Sp)
-                    )
-                }
+                listOfResult(result = result)
 
             }
         }    
     )
+}
+
+@Composable
+fun listOfResult(result:ArrayList<Int>){
+    result.forEach {
+        Text(text = "${it}", fontWeight = FontWeight.Normal,
+            fontSize = TextUnit(12f, type = TextUnitType.Sp)
+        )
+    }
 }
 
 @Preview
