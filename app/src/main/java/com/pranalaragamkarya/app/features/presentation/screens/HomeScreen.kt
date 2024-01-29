@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -26,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -64,9 +67,13 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
                     .height(10.dp))
-                TextField(value = textState.value, onValueChange = {
-                    textState.value = it
-                                                                   }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = textState.value,
+                    onValueChange = { textState.value = it},
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Decimal
+                    ),
+                )
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
                     .height(16.dp))
@@ -74,6 +81,7 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel = hiltView
                     currentInput = textState.value.toInt()
                     viewModel.generatePrime(currentInput)
                 },
+                    enabled = textState.value.isNotEmpty(),
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .fillMaxWidth()) {
